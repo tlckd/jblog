@@ -25,7 +25,13 @@ public class CategoryRepository {
 	}
 
 	public void insertCategory(CategoryVo categoryVo) {
-		sqlSession.insert("category.findCategoryInfo",categoryVo);
+		
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("blogId",categoryVo.getBlogId());
+		map.put("description",categoryVo.getDescription());
+		map.put("name",categoryVo.getName());
+		
+		sqlSession.insert("category.insertCategory",map);
 		
 	}
 }

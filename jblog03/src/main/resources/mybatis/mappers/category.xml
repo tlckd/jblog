@@ -5,9 +5,9 @@
 	<select id="findCategoryInfo" parameterType="map" resultType="categoryvo">
 				<![CDATA[
 					select no, name, description, blog_id as blogId, (select count(*)
-													from post a, category b
-													where a.category_no = b.no
-													group by b.no) as postCount
+																	from post a, category b
+																	where a.category_no = b.no
+																	group by b.no) as postCount
 					 from category
                      where blog_id= #{id }
                      order by no; 			 	
@@ -15,7 +15,7 @@
 				]]>
 	</select>
 	
-	<insert id="insertCategory" parameterType="categoryvo">
+	<insert id="insertCategory" parameterType="map">
 		<![CDATA[
 			insert
 		  	into category
