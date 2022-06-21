@@ -8,7 +8,7 @@
 			
 				<ul>
 					<c:forEach items="${categoryList }" var="vo" varStatus="status">
-						<li><a href="">${vo.name}</a></li>
+						<li><a href="${pageContext.request.contextPath}/${blogInfo.blogId}/${vo.no}">${vo.name}</a></li>
 					</c:forEach>
 				</ul>
 			

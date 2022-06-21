@@ -16,10 +16,17 @@ public class CategoryService {
 	@Autowired
 	private CategoryRepository categoryRepository;
 
-	public List<CategoryVo> getCategories(String id, Long categoryNo) {
-		return categoryRepository.findCategoryInfo(id,categoryNo);
+	public List<CategoryVo> getCategories(String id) {
+		return categoryRepository.findCategoryInfo(id);
 		
 	}
+
+	public void insertCategory(CategoryVo categoryVo) {
+		categoryRepository.insertCategory(categoryVo);
+		
+	}
+	
+
 	
 	
 	

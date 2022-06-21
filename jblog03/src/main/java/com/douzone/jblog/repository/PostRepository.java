@@ -1,6 +1,7 @@
 package com.douzone.jblog.repository;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import org.apache.ibatis.session.SqlSession;
@@ -26,6 +27,15 @@ public class PostRepository {
 		
 	}
 	
+	public List<PostVo> findPostList(Long categoryNo) {
+		
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("categoryNo", categoryNo);
+		
+		return sqlSession.selectList("post.findPostList",map);
+		
+	}
+
 	
 	
 }

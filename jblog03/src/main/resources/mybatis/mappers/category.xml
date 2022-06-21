@@ -3,23 +3,24 @@
 <mapper namespace="category">
 
 	<select id="findCategoryInfo" parameterType="map" resultType="categoryvo">
-		<choose>
-			<when test="categoryNo == 0">
 				<![CDATA[
-					select no, name, description, blog_id as blogId
+					select no, name, description, blog_id as blogId, (select count(*)
+													from post a, category b
+													where a.category_no = b.no
+													group by b.no) as postCount
 					 from category
-					 where blog_id= #{id }
-					 order by no;
- 			 	]]>
-			</when>
-			<otherwise>
+                     where blog_id= #{id }
+                     order by no; 			 	
 
-			</otherwise>
-		</choose>
-		
-			
-			
-		
+				]]>
 	</select>
+	
+	<insert id="insertCategory" parameterType="categoryvo">
+		<![CDATA[
+			insert
+		  	into category
+			values (null,#{name }, #{description }, #{blogId })
+		]]>
+	</insert>
 	
 </mapper>

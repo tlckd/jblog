@@ -20,6 +20,12 @@ public class BlogService {
 	public BlogVo getBlog(String id) {
 		return blogRepository.findBlogInfo(id); 
 	}
+
+
+	public void updateBlogInfo(BlogVo blogVo) {
+		blogRepository.update(blogVo);
+		
+	}
 	
 
 	

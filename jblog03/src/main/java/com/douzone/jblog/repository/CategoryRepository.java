@@ -16,14 +16,16 @@ public class CategoryRepository {
 	@Autowired
 	private SqlSession sqlSession;
 	
-	public List<CategoryVo> findCategoryInfo(String id, Long categoryNo) {
-		
+	public List<CategoryVo> findCategoryInfo(String id) {
 		Map<String, Object> map = new HashMap<String, Object>();
 		map.put("id", id);
-		map.put("categoryNo", categoryNo);
 		
 		return sqlSession.selectList("category.findCategoryInfo",map);
 		
 	}
 
+	public void insertCategory(CategoryVo categoryVo) {
+		sqlSession.insert("category.findCategoryInfo",categoryVo);
+		
+	}
 }
