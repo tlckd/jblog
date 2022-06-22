@@ -16,18 +16,18 @@
 			
 			<when test="postNo==0">
 				<![CDATA[
-					 select no,title,contents,category_no as categoryNo
-						from post
-						where category_no=#{categoryNo }
+					 select p.no,p.title,p.contents,p.category_no as categoryNo
+						from post p, category c
+						where p.category_no=#{categoryNo } and p.category_no=c.no and c.blog_id=#{id }
 						order by no desc
 						limit 1
 				]]>
 			</when>
 			<otherwise>
 				<![CDATA[
-					 select no,title,contents,category_no as categoryNo
-						from post
-						where category_no=#{categoryNo } and no=#{postNo }
+					  select p.no,p.title,p.contents,p.category_no as categoryNo
+						from post p, category c
+						where p.category_no=#{categoryNo } and p.no=#{postNo } and p.category_no=c.no and c.blog_id=#{id }
 						order by no desc
 				]]>
 			</otherwise>
