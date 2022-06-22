@@ -65,7 +65,7 @@ order by no;
 select *
   from category a;
 
-select count(*) as postCount
+select count(*) as postCount,b.no
   from post a, category b
  where a.category_no = b.no
 group by b.no;
@@ -78,6 +78,23 @@ from category
 where blog_id= 'aa'
 order by no;
 
-
+insert into post values(null,"테스트용타이틀5","테스트용컨텐츠5",1);
 
 insert into post values(null,"테스트용타이틀4","테스트용컨텐츠4",2);
+
+
+select a.no,count(*)
+from category a left outer join post b on a.no =  b.category_no
+group by a.no;
+
+select * 
+from category a left outer join post b on a.no =  b.category_no
+group by a.no;
+
+select * 
+from category a left outer join post b on a.no =  b.category_no
+group by a.no;
+
+select * from category;
+
+select * from post;
