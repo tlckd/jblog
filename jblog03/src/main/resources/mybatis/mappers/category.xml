@@ -4,23 +4,32 @@
 
 	<select id="findCategoryInfo" parameterType="map" resultType="categoryvo">
 				<![CDATA[
-					select no, name, description, blog_id as blogId, (select count(*)
-																	from post a, category b
-																	where a.category_no = b.no
-																	group by b.no) as postCount
-					 from category
-                     where blog_id= #{id }
-                     order by no; 			 	
-
+					select c.no,c.name,c.description,c.blog_id as blogId,
+						(select count(*) 
+							from post p
+					        where p.category_no=c.no) as postCount
+					 from category c
+					 where blog_id=#{id }
+					 order by c.no	
+					
 				]]>
 	</select>
 	
-	<insert id="insertCategory" parameterType="map">
+	<insert id="insertCategory" parameterType="categoryvo">
 		<![CDATA[
 			insert
 		  	into category
 			values (null,#{name }, #{description }, #{blogId })
 		]]>
 	</insert>
+
+	<delete id="deleteCategory" parameterType="map">
+		<![CDATA[
+				delete from category
+				 where no=#{categoryNo} and blog_id=#{blogId}
+		]]>
+	</delete>
 	
+
+
 </mapper>

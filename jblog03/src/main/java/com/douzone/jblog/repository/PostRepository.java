@@ -16,9 +16,10 @@ public class PostRepository {
 	@Autowired
 	private SqlSession sqlSession;
 
-	public PostVo findPostContents(Long categoryNo, Long postNo) {
+	public PostVo findPostContents(String id, Long categoryNo, Long postNo) {
 		
 		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("id", id);
 		map.put("categoryNo", categoryNo);
 		map.put("postNo", postNo);
 		
@@ -27,12 +28,23 @@ public class PostRepository {
 		
 	}
 	
-	public List<PostVo> findPostList(Long categoryNo) {
+	public List<PostVo> findPostList(String id, Long categoryNo) {
 		
 		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("id", id);
 		map.put("categoryNo", categoryNo);
-		
 		return sqlSession.selectList("post.findPostList",map);
+		
+	}
+
+	public void insertPost(String id, int categoryNo, String postTitle, String postContent) {
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("id", id);
+		map.put("categoryNo", categoryNo);
+		map.put("postTitle", postTitle);
+		map.put("postContent", postContent);
+		
+		sqlSession.insert("post.insertPost",map);
 		
 	}
 

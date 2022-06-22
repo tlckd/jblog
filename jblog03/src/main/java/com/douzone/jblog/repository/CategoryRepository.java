@@ -25,13 +25,17 @@ public class CategoryRepository {
 	}
 
 	public void insertCategory(CategoryVo categoryVo) {
+	
+		sqlSession.insert("category.insertCategory",categoryVo);
 		
+	}
+	
+	public void deleteCategory(int categoryNo, String blogId) {
 		Map<String, Object> map = new HashMap<String, Object>();
-		map.put("blogId",categoryVo.getBlogId());
-		map.put("description",categoryVo.getDescription());
-		map.put("name",categoryVo.getName());
+		map.put("categoryNo", categoryNo);
+		map.put("blogId", blogId);
 		
-		sqlSession.insert("category.insertCategory",map);
+		sqlSession.insert("category.deleteCategory",map);
 		
 	}
 }

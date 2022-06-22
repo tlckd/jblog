@@ -26,7 +26,9 @@ public class CategoryService {
 		
 	}
 	
-
+	public void deleteCategory(int categoryNo, String blogId) {
+		categoryRepository.deleteCategory(categoryNo, blogId);
+	}
 	
 	
 	

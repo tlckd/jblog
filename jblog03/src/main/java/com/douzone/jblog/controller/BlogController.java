@@ -58,8 +58,8 @@ public class BlogController {
 		
 		blogVo=blogService.getBlog(id);
 		List<CategoryVo> categoryList =categoryService.getCategories(id);
-		postVo = postService.getPostContents( categoryNo,postNo);
-		List<PostVo> postList = postService.getPostList(categoryNo);
+		postVo = postService.getPostContents(id,categoryNo,postNo);
+		List<PostVo> postList = postService.getPostList(id,categoryNo);
 			
 		model.addAttribute("blogInfo",blogVo);
 		model.addAttribute("categoryList",categoryList);
@@ -123,11 +123,7 @@ public class BlogController {
 	public String adminCategoryInsert(@PathVariable("id") String id, @RequestParam(value = "name",required = true) String categoryName,
 			@RequestParam(value = "desc",required = true) String desc,
 			@AuthUser UserVo authUser ,CategoryVo categoryVo, Model model ) {
-		
-		System.out.println("테스트11111111111111111" + id);
-		System.out.println("테스트22222222222222222" + categoryName);
-		System.out.println("테스트33333333333333333" + desc);
-		
+
 		if(authUser == null && authUser.getId().equals(id)) {
 			return "redirect:/main";
 		}
@@ -136,12 +132,59 @@ public class BlogController {
 		categoryVo.setDescription(desc);
 		categoryVo.setName(categoryName);
 		
-		System.out.println("테스트444444444"+categoryVo);
 		categoryService.insertCategory(categoryVo);
 		
 		return "redirect:/"+id+"/admin/basic/category";
 	}
 	
+	@Auth
+	@RequestMapping("/admin/basic/category/delete/{no}")
+	public String adminCategoryDelete(@PathVariable("id") String id, 
+			@PathVariable(value = "no",required = true) int categoryNo,
+			@AuthUser UserVo authUser ,CategoryVo categoryVo, Model model ) {
+
+		if(authUser == null && authUser.getId().equals(id)) {
+			return "redirect:/main";
+		}
+
+		categoryService.deleteCategory(categoryNo,id);
+		
+		return "redirect:/"+id+"/admin/basic/category";
+	}
+
+	@Auth
+	@RequestMapping("/admin/basic/write")
+	public String adminWrite(@PathVariable("id") String id, @AuthUser UserVo authUser, BlogVo blogVo, Model model) {
+		
+		if( authUser == null  || !authUser.getId().equals(id) ) {
+			return "redirect:/main";
+		}
+		
+		blogVo=blogService.getBlog(id);
+		List<CategoryVo> categoryList =categoryService.getCategories(id);
+		
+		model.addAttribute("blogInfo",blogVo);
+		model.addAttribute("categoryList",categoryList);
+		
+		return "blog/admin/write";
+	}
 	
 	
+	@Auth
+	@RequestMapping("/admin/basic/write/insert")
+	public String adminWriteInsert(@PathVariable("id") String id, @AuthUser UserVo authUser, BlogVo blogVo, Model model,
+			@RequestParam(value = "category",required = true) int categoryNo,
+			@RequestParam(value = "title",required = true) String postTitle,
+			@RequestParam(value = "content",required = true) String postContent
+			) {
+		
+		if( authUser == null  || !authUser.getId().equals(id) ) {
+			return "redirect:/main";
+		}
+
+		
+		postService.writePost(id,categoryNo,postTitle,postContent);
+				
+		return "redirect:/"+id+"/admin/basic/category";
+	}
 }

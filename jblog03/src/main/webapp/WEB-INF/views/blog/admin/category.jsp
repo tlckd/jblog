@@ -17,7 +17,7 @@
 				<ul class="admin-menu">
 					<li><a href="${pageContext.request.contextPath }/${authUser.id}/admin/basic">기본설정</a></li>
 					<li class="selected">카테고리</li>
-					<li><a href="">글작성</a></li>
+					<li><a href="${pageContext.request.contextPath }/${authUser.id}/admin/basic/write">글작성</a></li>
 				</ul>
 		      	<table class="admin-cat">
 		      		<tr>
@@ -29,11 +29,17 @@
 		      		</tr>
 		      		<c:forEach items="${categoryList }" var="vo" varStatus="status">
 						<tr>
-							<td>${vo.no }</td>
+							<td>${status.index+1 }</td>
 							<td>${vo.name}</td>
 							<td>${vo.postCount}</td>
 							<td>${vo.description }</td>
-							<td><img src="${pageContext.request.contextPath}/assets/images/delete.jpg"></td>
+							<td>
+								<c:if test="${vo.postCount==0}">
+									<a href="${pageContext.request.contextPath }/${authUser.id}/admin/basic/category/delete/${vo.no}">
+										<img src="${pageContext.request.contextPath}/assets/images/delete.jpg">
+									</a>
+								</c:if>
+							</td>
 						</tr> 
 					</c:forEach> 				  
 				</table>

@@ -87,14 +87,37 @@ select a.no,count(*)
 from category a left outer join post b on a.no =  b.category_no
 group by a.no;
 
-select * 
-from category a left outer join post b on a.no =  b.category_no
-group by a.no;
 
-select * 
-from category a left outer join post b on a.no =  b.category_no
-group by a.no;
+select *
+from category a left outer join post b on a.no =  b.category_no;
+
+
+
+
 
 select * from category;
 
+select * from post;
+
+
+
+select * 
+from category a, post b 
+where a.no = b.category_no;
+
+select c.no,c.name,c.description,c.blog_id as blogId,
+	(select count(*) 
+		from post p
+        where p.category_no=c.no) as postCount
+from category c
+where blog_id='aa'
+order by c.no;
+
+select * 
+from category;
+
+delete from category
+where no='6' and blog_id='aa';
+
+insert into post values(null,"테스트용타이틀4","테스트용컨텐츠4",2);
 select * from post;
