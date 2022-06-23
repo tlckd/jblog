@@ -44,7 +44,7 @@
 	
 	
 	<!-- MVC Resource Mapping -->
-	<mvc:resources mapping="/assets/images/**" location="file:/jblog-uploads/"  />
+	<mvc:resources mapping="/assets/images/**" location="file:/jblog-uploads/images/"  />
 	
 	
 	<!-- Multipart Resolver -->
