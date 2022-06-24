@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="post">
+	<select id="findPostContents" parameterType="map" resultType="postvo">
+		<choose>
+			<when test="categoryNo==0 and postNo==0 ">	
+				<![CDATA[
+					select p.no,p.title,p.contents,p.category_no as categoryNo
+					 from post p, category c
+					 where p.category_no=c.no and c.blog_id=#{id }
+					 order by no desc
+					 limit 1
+					 
+				]]>
+			</when>
+			
+			<when test="postNo==0">
+				<![CDATA[
+					 select p.no,p.title,p.contents,p.category_no as categoryNo
+						from post p, category c
+						where p.category_no=#{categoryNo } and p.category_no=c.no and c.blog_id=#{id }
+						order by no desc
+						limit 1
+				]]>
+			</when>
+			<otherwise>
+				<![CDATA[
+					  select p.no,p.title,p.contents,p.category_no as categoryNo
+						from post p, category c
+						where p.category_no=#{categoryNo } and p.no=#{postNo } and p.category_no=c.no and c.blog_id=#{id }
+						order by no desc
+				]]>
+			</otherwise>
+		</choose>
+	</select>
+	
+	<select id="findPostList" parameterType="map" resultType="postvo" >
+			<choose>
+			<when test="categoryNo==0">	
+				<![CDATA[
+					select p.no,p.title,p.contents,p.category_no as categoryNo
+						from post p, category c
+						where p.category_no=c.no and c.blog_id=#{id }
+						order by p.no desc
+				]]>
+			</when>
+			<otherwise>
+				<![CDATA[
+					select p.no,p.title,p.contents,p.category_no as categoryNo
+						from post p, category c
+						where p.category_no=c.no and c.blog_id=#{id } and category_no=#{categoryNo }
+						order by p.no desc
+						
+				]]>
+			</otherwise>
+		</choose>
+	</select>
+	
+	
+	<insert id="insertPost" parameterType="map">
+			insert into post values(null,#{postTitle },#{postContent },#{categoryNo });
+	</insert>
+</mapper>
