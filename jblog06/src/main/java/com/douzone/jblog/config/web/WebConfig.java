@@ -26,9 +26,7 @@ import com.douzone.jblog.security.LogoutInterceptor;
 @SpringBootConfiguration
 public class WebConfig implements WebMvcConfigurer{
 
-	@Autowired
-	private Environment env;
-	
+
 	// Security Interceptors
 	@Bean
 	public HandlerInterceptor loginInterceptor() {
@@ -59,17 +57,4 @@ public class WebConfig implements WebMvcConfigurer{
 	}
 	
 
-	
-	
-	@Override
-	public void addResourceHandlers(ResourceHandlerRegistry registry) {
-		registry
-			.addResourceHandler(env.getProperty("fileupload.resourceMapping"))
-			.addResourceLocations("file:" + env.getProperty("fileupload.uploadLocation"));
-		//url 매핑한거 적어줘서 뭐 읽어와라 이렇게 해줘야함 
-		registry
-		.addResourceHandler("/assets/**")
-		.addResourceLocations("classpath:/static/");
-		
-	}
 }
